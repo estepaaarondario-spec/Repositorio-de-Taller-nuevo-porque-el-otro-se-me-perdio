@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muestra de Proyectos · 5.º año</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--c1:#d4a017;--c1t:#1b1b1b;--c2:#6f4e37;--c2t:#fff;--bg:#faf6ef;--ink:#2a2420;--muted:#7a6f66;--line:#e6dccd}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Poppins',system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 70px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
+h1{margin:0;font-size:clamp(1.6rem,5vw,2.4rem);line-height:1.15}
+header p{margin:4px 0 0;color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+#status{font-size:.88rem;border-radius:10px;padding:8px 12px;margin-bottom:22px;background:#fff;border:1px solid var(--line)}
+#status.local{background:#fff4d6;border-color:#f0d58a}
+#status.err{background:#fde2e2;border-color:#f0a3a3}
+button,.btn{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:10px;padding:9px 16px;background:var(--ink);color:#fff}
+button:hover{filter:brightness(1.12)}
+button.soft{background:#fff;color:var(--ink);border:1px solid var(--line);padding:6px 12px;font-size:.85rem}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #3b82f6;outline-offset:2px}
+.sector{margin-bottom:40px}
+.banner{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:16px 16px 0 0}
+.banner h2{margin:0;font-size:1.6rem}
+.banner small{opacity:.85;font-weight:500}
+.banner button{background:rgba(255,255,255,.92);color:#1b1b1b}
+.s1 .banner{background:var(--c1);color:var(--c1t)} .s2 .banner{background:var(--c2);color:var(--c2t)}
+.s1 .grid{border-color:var(--c1)} .s2 .grid{border-color:var(--c2)}
+.s1 .by,.s1 .card a{color:var(--c1)} .s2 .by,.s2 .card a{color:var(--c2)}
+.s1 .ph{background:var(--c1);color:var(--c1t)} .s2 .ph{background:var(--c2);color:var(--c2t)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;padding:18px;background:#fff;border:3px solid;border-top:0;border-radius:0 0 16px 16px}
+.card{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;background:#fff}
+.card img,.ph{width:100%;height:160px;object-fit:cover;display:block}
+.ph{display:flex;align-items:center;justify-content:center;font-size:3.2rem;font-weight:700}
+.body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{margin:0;font-size:1.1rem;word-break:break-word}
+.by{margin:0;font-size:.85rem;font-weight:600}
+.desc{margin:0;font-size:.92rem;color:var(--muted);white-space:pre-line;word-break:break-word}
+.card a{font-weight:600;font-size:.9rem}
+.acts{display:flex;gap:8px;margin-top:auto;padding-top:8px}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:26px}
+dialog{border:0;border-radius:18px;padding:22px;width:min(520px,94vw);box-shadow:0 20px 60px rgba(0,0,0,.35);color:var(--ink)}
+dialog::backdrop{background:rgba(30,20,10,.55)}
+dialog h2{margin:0 0 12px}
+label{display:block;font-weight:600;font-size:.88rem;margin:10px 0 4px}
+input,textarea,select{font:inherit;width:100%;padding:9px 11px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+input[type=color]{padding:2px;height:44px;cursor:pointer}
+textarea{min-height:90px;resize:vertical}
+.help{font-size:.8rem;color:var(--muted);margin:4px 0 0}
+.prev{display:none;align-items:center;gap:10px;margin-top:8px}.prev.show{display:flex}
+.prev img{width:70px;height:70px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.row{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Muestra de Proyectos · 5.º año</h1>
+      <p>Subí tu proyecto con una imagen y contá de qué trata.</p>
+    </div>
+    <div class="tools">
+      <button class="soft" id="colorsBtn" hidden>Colores</button>
+      <button class="soft" id="adminBtn">Modo docente</button>
+    </div>
+  </header>
+  <div id="status" role="status">Conectando…</div>
+  <div id="sectors"></div>
+</div>
+
+<dialog id="dlg">
+  <form id="form">
+    <h2 id="fTitle">Nuevo proyecto</h2>
+    <label for="curso">Sector</label><select id="curso"></select>
+    <label for="titulo">Título del proyecto</label><input id="titulo" maxlength="100" required>
+    <label for="autores">Integrantes</label><input id="autores" maxlength="120" placeholder="Ej: Ana, Luis y Sofía">
+    <label for="desc">¿De qué trata?</label><textarea id="desc" maxlength="600" required></textarea>
+    <label for="url">Link (opcional)</label><input id="url" inputmode="url" placeholder="https://...">
+    <label for="imgFile">Imagen (desde tu computadora o celular)</label>
+    <input id="imgFile" type="file" accept="image/*">
+    <div class="prev" id="prev"><img id="prevImg" alt="Vista previa"><button type="button" class="soft" id="rmImg">Quitar imagen</button></div>
+    <label for="pin">Clave del proyecto</label><input id="pin" type="password" autocomplete="new-password">
+    <p class="help" id="pinHelp"></p>
+    <div class="row"><button type="button" class="soft" id="cancel">Cancelar</button><button id="saveBtn">Guardar</button></div>
+  </form>
+</dialog>
+
+<dialog id="cdlg">
+  <h2>Colores de los sectores</h2>
+  <div class="two">
+    <div><label for="c1" id="c1l"></label><input type="color" id="c1"></div>
+    <div><label for="c2" id="c2l"></label><input type="color" id="c2"></div>
+  </div>
+  <p class="help">Se guardan para todos los que vean la página.</p>
+  <div class="row"><button class="soft" id="cReset">Restaurar</button><button class="soft" id="cClose">Cancelar</button><button id="cSave">Guardar</button></div>
+</dialog>
+
+<script src="config.js"></script>
+<script type="module">
+const cfg = window.APP_CONFIG, $ = id => document.getElementById(id);
+const COURSES = cfg.courses, KEYS = Object.keys(COURSES);
+let projects = [], colors = {...cfg.colors}, isAdmin = false, editing = null, imgData = '', store;
+
+/* ---------- Almacenamiento: Firebase (compartido) o local (prueba) ---------- */
+async function makeStore(){
+  if (cfg.firebase.projectId){
+    const B = 'https://www.gstatic.com/firebasejs/10.14.1/';
+    const {initializeApp} = await import(B + 'firebase-app.js');
+    const F = await import(B + 'firebase-firestore.js');
+    const db = F.getFirestore(initializeApp(cfg.firebase));
+    const col = F.collection(db, 'proyectos'), cdoc = F.doc(db, 'config', 'colores');
+    return {
+      online: true,
+      onProjects: (cb, err) => F.onSnapshot(col, s => cb(s.docs.map(d => ({id: d.id, ...d.data()}))), err),
+      onColors: cb => F.onSnapshot(cdoc, s => s.exists() && cb(s.data()), () => {}),
+      save: (id, d) => id ? F.setDoc(F.doc(db, 'proyectos', id), d) : F.addDoc(col, d),
+      remove: id => F.deleteDoc(F.doc(db, 'proyectos', id)),
+      saveColors: c => F.setDoc(cdoc, c)
+    };
+  }
+  const K = 'proyectos5to-local', KC = 'proyectos5to-colores';
+  let pcb;
+  const read = () => { try { return JSON.parse(localStorage.getItem(K)) || []; } catch(e){ return []; } };
+  const write = l => { try { localStorage.setItem(K, JSON.stringify(l)); } catch(e){ alert('El navegador se quedó sin espacio: usá una imagen más chica.'); throw e; } pcb && pcb(l); };
+  return {
+    online: false,
+    onProjects: cb => { pcb = cb; cb(read()); },
+    onColors: cb => { try { const c = JSON.parse(localStorage.getItem(KC)); c && cb(c); } catch(e){} },
+    save: async (id, d) => { const l = read(); write(id ? l.map(p => p.id === id ? {id, ...d} : p) : [{id: String(Date.now()), ...d}, ...l]); },
+    remove: async id => write(read().filter(p => p.id !== id)),
+    saveColors: async c => { localStorage.setItem(KC, JSON.stringify(c)); applyColors(c); }
+  };
+}
+
+/* ---------- Utilidades ---------- */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function hash(s){ const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('proy5:' + s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
+function cleanUrl(u){ u = u.trim(); if (!u) return ''; if (!/^https?:\/\//i.test(u)) u = 'https://' + u; try { return new URL(u).href; } catch(e){ return ''; } }
+const lum = h => { const n = parseInt(h.slice(1), 16); return (.299*(n>>16&255) + .587*(n>>8&255) + .114*(n&255)) / 255; };
+function applyColors(c){
+  if (!/^#[0-9a-f]{6}$/i.test(c.c1 || '') || !/^#[0-9a-f]{6}$/i.test(c.c2 || '')) return;
+  colors = {c1: c.c1, c2: c.c2};
+  const r = document.documentElement.style;
+  r.setProperty('--c1', c.c1); r.setProperty('--c1t', lum(c.c1) > .6 ? '#1b1b1b' : '#fff');
+  r.setProperty('--c2', c.c2); r.setProperty('--c2t', lum(c.c2) > .6 ? '#1b1b1b' : '#fff');
+}
+function compress(file, cb){
+  const rd = new FileReader();
+  rd.onload = ev => {
+    const im = new Image();
+    im.onload = () => {
+      const k = Math.min(1, 900 / Math.max(im.width, im.height)), c = document.createElement('canvas');
+      c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+      const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
+      let q = .8, out = c.toDataURL('image/jpeg', q);
+      while (out.length > 600000 && q > .3){ q -= .1; out = c.toDataURL('image/jpeg', q); }
+      cb(out);
+    };
+    im.onerror = () => alert('No se pudo leer esa imagen.');
+    im.src = ev.target.result;
+  };
+  rd.readAsDataURL(file);
+}
+
+/* ---------- Pantalla ---------- */
+$('sectors').innerHTML = KEYS.map((k, i) => `
+  <section class="sector s${i+1}" aria-labelledby="h-${k}">
+    <div class="banner"><div><h2 id="h-${k}">${esc(COURSES[k])}</h2><small id="n-${k}"></small></div>
+      <button data-add="${k}">+ Agregar proyecto</button></div>
+    <div class="grid" id="g-${k}"></div>
+  </section>`).join('');
+$('curso').innerHTML = KEYS.map(k => `<option value="${k}">${esc(COURSES[k])}</option>`).join('');
+$('c1l').textContent = COURSES[KEYS[0]] + ' (color)'; $('c2l').textContent = COURSES[KEYS[1]] + ' (color)';
+
+const card = p => `<article class="card">
+  ${(p.img || '').startsWith('data:image/') ? `<img src="${esc(p.img)}" alt="${esc(p.titulo)}">` : `<div class="ph" aria-hidden="true">${esc((p.titulo || '?').charAt(0).toUpperCase())}</div>`}
+  <div class="body"><h3>${esc(p.titulo)}</h3>
+  ${p.autores ? `<p class="by">${esc(p.autores)}</p>` : ''}
+  <p class="desc">${esc(p.desc)}</p>
+  ${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">Ver proyecto</a>` : ''}
+  <div class="acts"><button class="soft" data-e="${esc(p.id)}">Editar</button><button class="soft" data-d="${esc(p.id)}">Borrar</button></div></div></article>`;
+
+function render(){
+  KEYS.forEach(k => {
+    const l = projects.filter(p => p.curso === k).sort((a, b) => (b.creado || 0) - (a.creado || 0));
+    $('n-' + k).textContent = l.length + (l.length === 1 ? ' proyecto' : ' proyectos');
+    $('g-' + k).innerHTML = l.length ? l.map(card).join('') : '<p class="empty">Todavía no hay proyectos. ¡Sé el primero en agregar uno!</p>';
+  });
+}
+
+function status(msg, cls){ const s = $('status'); s.textContent = msg; s.className = cls || ''; }
+
+/* ---------- Formulario ---------- */
+function showPrev(){ $('prev').classList.toggle('show', !!imgData); if (imgData) $('prevImg').src = imgData; }
+function openForm(curso, p){
+  editing = p || null; imgData = p ? (p.img || '') : '';
+  $('fTitle').textContent = p ? 'Editar proyecto' : 'Nuevo proyecto';
+  $('curso').value = p ? p.curso : curso;
+  $('titulo').value = p ? p.titulo : ''; $('autores').value = p ? (p.autores || '') : '';
+  $('desc').value = p ? p.desc : ''; $('url').value = p ? (p.url || '') : '';
+  $('pin').value = ''; $('pin').required = !p; $('imgFile').value = '';
+  $('pinHelp').textContent = p ? 'Dejalo vacío para mantener la clave actual.' : 'Elegí una clave de 4 o más caracteres: la vas a necesitar para editar o borrar tu proyecto.';
+  showPrev(); $('dlg').showModal();
+}
+$('imgFile').onchange = e => { const f = e.target.files[0]; if (f) compress(f, d => { imgData = d; showPrev(); }); };
+$('rmImg').onclick = () => { imgData = ''; $('imgFile').value = ''; showPrev(); };
+$('cancel').onclick = () => $('dlg').close();
+
+$('form').onsubmit = async e => {
+  e.preventDefault();
+  const pin = $('pin').value;
+  if ((!editing || pin) && pin.length < 4){ alert('La clave debe tener al menos 4 caracteres.'); return; }
+  const d = {
+    curso: $('curso').value, titulo: $('titulo').value.trim(), autores: $('autores').value.trim(),
+    desc: $('desc').value.trim(), url: cleanUrl($('url').value), img: imgData,
+    pin: pin ? await hash(pin) : editing.pin,
+    creado: editing ? (editing.creado || Date.now()) : Date.now(), editado: Date.now()
+  };
+  $('saveBtn').disabled = true;
+  try { await store.save(editing ? editing.id : null, d); $('dlg').close(); }
+  catch(err){ alert('No se pudo guardar (' + (err.code || err.message) + '). Revisá la conexión o la configuración.'); }
+  finally { $('saveBtn').disabled = false; }
+};
+
+async function authorize(p){
+  if (isAdmin) return true;
+  const pin = prompt('Ingresá la clave de este proyecto:');
+  if (pin === null) return false;
+  if (await hash(pin) === p.pin) return true;
+  alert('Clave incorrecta.'); return false;
+}
+
+document.addEventListener('click', async e => {
+  const t = e.target;
+  if (t.dataset.add) openForm(t.dataset.add);
+  if (t.dataset.e){ const p = projects.find(x => x.id === t.dataset.e); if (p && await authorize(p)) openForm(p.curso, p); }
+  if (t.dataset.d){
+    const p = projects.find(x => x.id === t.dataset.d);
+    if (p && await authorize(p) && confirm('¿Borrar «' + p.titulo + '»? No se puede deshacer.')){
+      try { await store.remove(p.id); } catch(err){ alert('No se pudo borrar (' + (err.code || err.message) + ').'); }
+    }
+  }
+});
+
+/* ---------- Modo docente y colores ---------- */
+$('adminBtn').onclick = () => {
+  if (isAdmin){ isAdmin = false; $('colorsBtn').hidden = true; $('adminBtn').textContent = 'Modo docente'; return; }
+  const pin = prompt('Clave del modo docente:');
+  if (pin === null) return;
+  if (pin === cfg.adminPin){ isAdmin = true; $('colorsBtn').hidden = false; $('adminBtn').textContent = 'Salir del modo docente'; }
+  else alert('Clave incorrecta.');
+};
+$('colorsBtn').onclick = () => { $('c1').value = colors.c1; $('c2').value = colors.c2; $('cdlg').showModal(); };
+$('c1').oninput = $('c2').oninput = () => applyColors({c1: $('c1').value, c2: $('c2').value});
+$('cClose').onclick = () => { applyColors(colors0); $('cdlg').close(); };
+$('cReset').onclick = () => { $('c1').value = cfg.colors.c1; $('c2').value = cfg.colors.c2; applyColors(cfg.colors); };
+$('cSave').onclick = async () => {
+  try { await store.saveColors({c1: $('c1').value, c2: $('c2').value}); $('cdlg').close(); }
+  catch(err){ alert('No se pudieron guardar los colores (' + (err.code || err.message) + ').'); }
+};
+let colors0 = colors;
+$('colorsBtn').addEventListener('click', () => { colors0 = {...colors}; });
+
+/* ---------- Inicio ---------- */
+applyColors(cfg.colors); render();
+try {
+  store = await makeStore();
+  store.onColors(c => { applyColors(c); });
+  store.onProjects(l => { projects = l; render(); if (store.online) status('Conectado: los proyectos se guardan para todos y se actualizan en vivo.'); },
+    err => status('No se pudo leer la base de datos (' + (err.code || err.message) + '). Revisá la configuración de Firebase y las reglas.', 'err'));
+  if (!store.online) status('Modo de prueba: los proyectos solo se guardan en este navegador. Configurá Firebase (ver README) para compartirlos con todos.', 'local');
+} catch(err){ status('Error al iniciar: ' + (err.message || err), 'err'); }
+</script>
+</body>
+</html>
